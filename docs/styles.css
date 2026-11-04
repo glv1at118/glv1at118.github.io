@@ -1,0 +1,597 @@
+/* ---------- Theme ---------- */
+
+/* The theme is chosen by a script in <head> (saved choice, else the OS setting) via data-theme. */
+:root {
+  --bg: #ffffff;
+  --surface: #f5f6f8;
+  --text: #0d1117;
+  --muted: #373e47;
+  --faint: #5f6873;
+  --rule: #dde1e6;
+  --accent: #174a85;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --bg: #0d1014;
+  --surface: #151a20;
+  --text: #f3f5f7;
+  --muted: #c9d0d8;
+  --faint: #939ca8;
+  --rule: #2c333c;
+  --accent: #a3c6f7;
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 16px/1.65 var(--sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p, ul, ol, dl, dd {
+  margin: 0;
+}
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+time {
+  font-variant-numeric: tabular-nums;
+}
+
+.skip-link {
+  position: absolute;
+  top: -3rem;
+  left: 1rem;
+  padding: 0.5rem 0.75rem;
+  border-radius: 4px;
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+.print-only {
+  display: none;
+}
+
+/* ---------- Layout ---------- */
+
+.layout {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.intro {
+  padding: 3.5rem 0 2rem;
+}
+
+@media (min-width: 960px) {
+  .layout {
+    display: grid;
+    grid-template-columns: 17.5rem minmax(0, 1fr);
+    gap: 5rem;
+    padding: 0 3rem;
+  }
+
+  .intro {
+    position: sticky;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 5rem 0 3rem;
+  }
+
+  main {
+    padding-top: 5rem;
+  }
+}
+
+/* ---------- Intro column ---------- */
+
+.name {
+  font-size: 2.25rem;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.headline {
+  margin-top: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+}
+
+.location {
+  color: var(--muted);
+}
+
+.intro-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+/* Shown only once the theme script has run, so it never appears as a dead button. */
+.theme-toggle {
+  display: none;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+}
+
+:root[data-theme] .theme-toggle {
+  display: inline-flex;
+}
+
+.theme-toggle:hover {
+  border-color: var(--faint);
+  color: var(--text);
+}
+
+.theme-toggle svg {
+  display: block;
+  width: 1.125rem;
+  height: 1.125rem;
+}
+
+/* Moon in light mode (switch to dark), sun in dark mode (switch to light). */
+.theme-toggle .icon-sun,
+:root[data-theme="dark"] .theme-toggle .icon-moon {
+  display: none;
+}
+
+:root[data-theme="dark"] .theme-toggle .icon-sun {
+  display: block;
+}
+
+.toc {
+  display: none;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.25rem;
+  margin-top: 1.25rem;
+  font-size: 0.9375rem;
+}
+
+@media (min-width: 960px) {
+  .toc {
+    display: block;
+    margin-top: 3rem;
+  }
+
+  .toc a {
+    display: block;
+    padding: 0.4rem 0 0.4rem 1rem;
+    border-left: 2px solid var(--rule);
+    color: var(--muted);
+    font-size: 0.9375rem;
+  }
+
+  .toc a:hover {
+    color: var(--text);
+    text-decoration: none;
+  }
+
+  .toc a[aria-current="true"] {
+    border-left-color: var(--accent);
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  .contact {
+    flex-direction: column;
+    margin-top: auto;
+    padding-top: 2rem;
+  }
+}
+
+/* ---------- Sections ---------- */
+
+section {
+  padding: 2.5rem 0;
+  border-top: 1px solid var(--rule);
+  scroll-margin-top: 1.5rem;
+}
+
+@media (min-width: 960px) {
+  section:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+h2 {
+  margin-bottom: 1.5rem;
+  color: var(--accent);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.lead {
+  max-width: 62ch;
+  font-size: 1.125rem;
+  line-height: 1.7;
+}
+
+/* Shared heading block for roles and projects: title + date on one line, subtitle below. */
+.entry-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1.5rem;
+  align-items: baseline;
+  margin-bottom: 0.75rem;
+}
+
+.entry-title {
+  font-size: 1.0625rem;
+  font-weight: 600;
+  line-height: 1.4;
+}
+
+.entry-sub {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.entry-date {
+  grid-row: 1;
+  grid-column: 2;
+  color: var(--muted);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+@media (max-width: 560px) {
+  .entry-head {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .entry-date {
+    grid-row: auto;
+    grid-column: 1;
+  }
+}
+
+.bullets {
+  padding-left: 1.125rem;
+  list-style: disc;
+}
+
+.bullets ul {
+  margin-top: 0.4rem;
+  padding-left: 1.125rem;
+  list-style: circle;
+}
+
+.bullets li + li {
+  margin-top: 0.5rem;
+}
+
+.bullets li::marker {
+  color: var(--faint);
+}
+
+/* ---------- Experience ---------- */
+
+.org-name {
+  margin-bottom: 1.25rem;
+  font-size: 1.25rem;
+  font-weight: 650;
+}
+
+/* Vertical timeline: a thin rule with one marker per role; the current role is filled. */
+.roles {
+  margin-left: 5px;
+  padding-left: 1.75rem;
+  border-left: 1px solid var(--rule);
+}
+
+.role {
+  position: relative;
+}
+
+.role + .role {
+  margin-top: 2.25rem;
+}
+
+.role::before {
+  content: "";
+  position: absolute;
+  top: 0.45rem;
+  left: calc(-1.75rem - 5px);
+  width: 9px;
+  height: 9px;
+  border: 2px solid var(--faint);
+  border-radius: 50%;
+  background: var(--bg);
+}
+
+.role:first-child::before {
+  border-color: var(--accent);
+  background: var(--accent);
+}
+
+/* ---------- Project ---------- */
+
+.project {
+  padding: 1.5rem;
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+/* ---------- Skills ---------- */
+
+.skills > div {
+  display: grid;
+  grid-template-columns: 11rem minmax(0, 1fr);
+  align-items: baseline;
+  gap: 0.25rem 1.5rem;
+  padding: 0.7rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.skills > div:first-child {
+  padding-top: 0;
+}
+
+.skills > div:last-child {
+  border-bottom: 0;
+}
+
+.skills dt {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  font-weight: 500;
+}
+
+@media (max-width: 560px) {
+  .skills > div {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* ---------- Certifications & education ---------- */
+
+.subhead {
+  margin-bottom: 0.25rem;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.list + .subhead {
+  margin-top: 2rem;
+}
+
+.list li {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: 1.5rem;
+  align-items: baseline;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.list li:last-child {
+  border-bottom: 0;
+}
+
+.list-name {
+  font-weight: 550;
+}
+
+.list-sub {
+  display: block;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.list time {
+  color: var(--muted);
+  font-size: 0.875rem;
+  white-space: nowrap;
+}
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  padding: 2rem 0 3rem;
+  border-top: 1px solid var(--rule);
+  color: var(--faint);
+  font-size: 0.875rem;
+}
+
+/* ---------- Print: a clean one-column résumé ---------- */
+
+/* Every size above is in rem, so shrinking the root font scales the whole page for paper. */
+@media print {
+  /* Always print in light colours, even when the page is in dark mode. */
+  :root,
+  :root[data-theme] {
+    --bg: #fff;
+    --surface: #fff;
+    --text: #000;
+    --muted: #30363d;
+    --faint: #5f6873;
+    --rule: #d5d9de;
+    --accent: #174a85;
+    color-scheme: light;
+  }
+
+  @page {
+    margin: 12mm 15mm;
+  }
+
+  html {
+    font-size: 9.5pt;
+  }
+
+  body {
+    font-size: 1rem;
+    line-height: 1.42;
+  }
+
+  .layout {
+    display: block;
+    max-width: none;
+    padding: 0;
+  }
+
+  .intro {
+    position: static;
+    height: auto;
+    padding: 0 0 0.75rem;
+  }
+
+  .contact {
+    flex-direction: row;
+    margin-top: 0.4rem;
+    padding-top: 0;
+  }
+
+  .contact a {
+    color: var(--text);
+  }
+
+  .toc,
+  .skip-link,
+  .site-footer,
+  .screen-only,
+  :root[data-theme] .theme-toggle {
+    display: none;
+  }
+
+  .print-only {
+    display: inline;
+  }
+
+  main {
+    padding: 0;
+  }
+
+  section,
+  section:first-child {
+    padding: 0.75rem 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  h2 {
+    margin-bottom: 0.5rem;
+  }
+
+  .lead {
+    max-width: none;
+    font-size: 1rem;
+    line-height: 1.42;
+  }
+
+  .org-name {
+    margin-bottom: 0.5rem;
+    font-size: 1.125rem;
+  }
+
+  .role + .role {
+    margin-top: 0.9rem;
+  }
+
+  .entry-head {
+    margin-bottom: 0.3rem;
+  }
+
+  .bullets li + li,
+  .bullets ul {
+    margin-top: 0.15rem;
+  }
+
+  .project {
+    padding: 0;
+    border: 0;
+  }
+
+  .skills > div,
+  .skills > div:first-child,
+  .list li {
+    padding: 0.15rem 0;
+    border: 0;
+  }
+
+  .list + .subhead {
+    margin-top: 0.6rem;
+  }
+
+  .role,
+  .project,
+  .list li,
+  .skills > div {
+    break-inside: avoid;
+  }
+
+  h2,
+  .subhead,
+  .entry-head {
+    break-after: avoid;
+  }
+}
